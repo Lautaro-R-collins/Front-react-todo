@@ -1,0 +1,62 @@
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
+const LoginPage = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth(); 
+  const [form, setForm] = useState({ email: "", password: "" });
+
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(`${apiUrl}/api/auth/login`, form);
+
+      // Actualizamos context y localStorage
+      login(res.data.user, res.data.token);
+
+      toast.success("Bienvenido de nuevo!");
+      navigate("/"); // redireccion al home
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error en el login");
+    }
+  };
+
+  return (
+    <div className="px-4">
+      <div className="max-w-md mx-auto mt-10 p-4 rounded bg-base-300">
+        <h2 className="text-2xl font-bold mb-4">Iniciar sesión</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full border-none bg-base-100 p-2 rounded"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            value={form.password}
+            onChange={handleChange}
+            className="w-full border-none bg-base-100 p-2 rounded"
+          />
+          <button className="w-full btn btn-primary p-2 rounded cursor-pointer">
+            Iniciar sesión
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default LoginPage;

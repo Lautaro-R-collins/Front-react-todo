@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import NoteForm from "../components/NoteForm";
 import { toast } from "react-toastify";
+import api from "../api/axiosConfig.js"; // <-- usa esta instancia
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
-export const EditNotePage = () => {
+const EditNotePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [note, setNote] = useState(null);
@@ -15,11 +13,10 @@ export const EditNotePage = () => {
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/notes/${id}`);
+        const response = await api.get(`/api/notes/${id}`);
         setNote(response.data);
-      } catch (error) {
-        console.error(error); 
-        toast.error("Error al actualizar la nota");
+      } catch {
+        toast.error("Error al cargar la nota");
       }
     };
     fetchNote();
@@ -28,12 +25,13 @@ export const EditNotePage = () => {
   // Enviar cambios
   const handleUpdate = async (updatedNote) => {
     try {
-      await axios.put(`${apiUrl}/api/notes/${id}`, updatedNote);
+      await api.put(`/api/notes/${id}`, updatedNote); // <-- usa api
       toast.success("Nota actualizada!");
-      navigate("/"); 
+      navigate("/"); // Volvemos al home
     } catch (error) {
-      console.error(error); 
-      toast.error("Error al actualizar la nota");
+      toast.error(
+        error.response?.data?.message || "Error al actualizar la nota"
+      );
     }
   };
 

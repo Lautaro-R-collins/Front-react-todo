@@ -8,7 +8,7 @@ const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // 👈 obtenemos login del contexto
+  const { login } = useAuth(); // obtenemos login del contexto
   const [form, setForm] = useState({ name: "", email: "", password: "" });
 
   const handleChange = (e) => {
@@ -19,12 +19,9 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       const res = await axios.post(`${apiUrl}/api/auth/register`, form);
-
-      // 👇 Guardamos en el context (queda logueado)
-      login(res.data.user, res.data.token);
-
+      login(res.data.user, res.data.token);// Guardamos en el context (queda logueado)
       toast.success("Registro exitoso, bienvenido!");
-      navigate("/"); // 👈 redirige directo al Home
+      navigate("/"); 
     } catch (error) {
       toast.error(error.response?.data?.message || "Error en el registro");
       console.error(error);

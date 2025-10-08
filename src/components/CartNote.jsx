@@ -3,7 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 export const CartNote = ({ title, content, id, date, onDelete, onEdit }) => {
   return (
-    <div className="card bg-base-300 shadow-md h-56 min-w-[300px]"> 
+    <div className="card bg-base-300 shadow-md h-44 min-w-[300px]"> 
       <div className="card-body flex flex-col justify-between">
         <div>
           <h2 className="card-title font-bold text-lg lg:text-xl line-clamp-1">

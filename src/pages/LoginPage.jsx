@@ -18,10 +18,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const res = await axios.post(`${apiUrl}/api/auth/login`, form);
-
-      // Actualizamos context y localStorage
       login(res.data.user, res.data.token);
-
       toast.success("Bienvenido de nuevo!");
       navigate("/"); // redireccion al home
     } catch (error) {

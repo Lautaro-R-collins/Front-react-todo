@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Sidebar from "../components/Sidebar";
 import CartNote from "../components/CartNote";
-import NoteForm from "../components/NoteForm";
+import NoteModal from "../components/NoteModal"; 
 import formatData from "../utils/FormatDate";
 import api from "../api/axiosConfig.js";
 import { toast } from "react-toastify";
@@ -151,22 +151,13 @@ export const HomePage = () => {
         )}
       </main>
 
-      {/* --------- MODAL --------- */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-base-100 rounded-2xl p-6 w-full max-w-3xl">
-            <div className="flex justify-end mb-4">
-              <button className="text-2xl font-bold" onClick={closeModal}>
-                ✕
-              </button>
-            </div>
-            <NoteForm
-              onSubmit={handleSubmitModal}
-              initialDate={editingNote || { title: "", content: "" }}
-            />
-          </div>
-        </div>
-      )}
+      {/* Crear y editar notas */}
+      <NoteModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        handleSubmit={handleSubmitModal}
+        editingNote={editingNote}
+      />
     </div>
   );
 };

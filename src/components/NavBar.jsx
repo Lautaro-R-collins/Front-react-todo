@@ -1,23 +1,31 @@
 import { NavLink } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext.jsx";
 import { IoIosLogOut } from "react-icons/io";
 
-export const NavBar = () => {
+export const NavBar = ({ isSidebarOpen, toggleSidebar }) => {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="flex justify-between navbar bg-base-300 px-4">
-      <NavLink className="text-xl font-bold" to="/">TO-DO APP</NavLink>
+    <nav className="flex justify-between items-center navbar bg-base-300 px-4 fixed top-0 left-0 w-full z-50">
+      {/* menu hamburguesa para sidebar */}
+      {toggleSidebar && (
+        <button
+          onClick={toggleSidebar}
+          className="text-2xl mr-2 cursor-pointer"
+        >
+          {isSidebarOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      )}
+
+      {/* Acciones de usuario */}
       <div className="flex gap-2">
         {user ? (
           <>
-            <span className="self-center">Hola, {user.name}</span>
-            <NavLink to="/createNote" className="btn btn-primary gap-2">
-              <FaPlus />
-              Crear Nota
-            </NavLink>
-            <button className="btn btn-ghost" onClick={logout}>Salir <IoIosLogOut className="text-2xl"/></button>
+            <span className="self-center hidden sm:inline">Hola, {user.name}</span>
+            <button className="btn btn-ghost" onClick={logout}>
+              Salir <IoIosLogOut className="text-2xl"/>
+            </button>
           </>
         ) : (
           <>

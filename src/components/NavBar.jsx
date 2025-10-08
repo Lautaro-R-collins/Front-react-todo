@@ -23,7 +23,7 @@ export const NavBar = ({ isSidebarOpen, toggleSidebar }) => {
         {user ? (
           <>
             <span className="self-center hidden sm:inline">Hola, {user.name}</span>
-            <button className="btn btn-ghost" onClick={logout}>
+            <button className="btn btn-ghost btn-primary" onClick={logout}>
               Salir <IoIosLogOut className="text-2xl"/>
             </button>
           </>

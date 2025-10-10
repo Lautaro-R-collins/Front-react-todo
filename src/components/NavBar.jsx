@@ -14,7 +14,7 @@ export const NavBar = ({ isSidebarOpen, toggleSidebar }) => {
           onClick={toggleSidebar}
           className="text-2xl mr-2 cursor-pointer"
         >
-          {isSidebarOpen ? <FaTimes /> : <FaBars />}
+          {isSidebarOpen ? <FaBars /> : < FaTimes/>}
         </button>
       )}
 
@@ -22,7 +22,7 @@ export const NavBar = ({ isSidebarOpen, toggleSidebar }) => {
       <div className="flex gap-2">
         {user ? (
           <>
-            <span className="self-center hidden sm:inline">Hola, {user.name}</span>
+            <span className="self-center hidden font-bold sm:inline">Hola, {user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase()}</span>
             <button className="btn btn-ghost btn-primary" onClick={logout}>
               Salir <IoIosLogOut className="text-2xl"/>
             </button>

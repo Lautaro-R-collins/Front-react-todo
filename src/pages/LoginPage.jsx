@@ -20,16 +20,16 @@ const LoginPage = () => {
       const res = await axios.post(`${apiUrl}/api/auth/login`, form);
       login(res.data.user, res.data.token);
       toast.success("Bienvenido de nuevo!");
-      navigate("/"); // redireccion al home
+      navigate("/"); 
     } catch (error) {
       toast.error(error.response?.data?.message || "Error en el login");
     }
   };
 
   return (
-    <div className="px-4">
-      <div className="max-w-md mx-auto mt-10 p-4 rounded bg-base-300">
-        <h2 className="text-2xl font-bold mb-4">Iniciar sesión</h2>
+    <div className="flex items-center justify-center min-h-screen px-4">
+      <div className="w-full max-w-md p-6 rounded bg-base-300">
+        <h2 className="text-2xl font-bold mb-4 text-center">Iniciar sesión</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
@@ -37,7 +37,7 @@ const LoginPage = () => {
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full border-none bg-base-100 p-2 rounded"
+            className="w-full border-none bg-base-100 p-2 rounded outline-none focus:outline-none focus:ring-0 focus:border-none"
           />
           <input
             type="password"
@@ -45,7 +45,7 @@ const LoginPage = () => {
             placeholder="Contraseña"
             value={form.password}
             onChange={handleChange}
-            className="w-full border-none bg-base-100 p-2 rounded"
+            className="w-full border-none bg-base-100 p-2 rounded outline-none focus:outline-none focus:ring-0 focus:border-none"
           />
           <button className="w-full btn btn-primary p-2 rounded cursor-pointer">
             Iniciar sesión

@@ -7,30 +7,38 @@ export const NavBar = ({ isSidebarOpen, toggleSidebar }) => {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="flex justify-between items-center navbar bg-base-300 px-4 fixed top-0 left-0 w-full z-50">
-      {/* menu hamburguesa para sidebar */}
+    <nav className="flex items-center navbar bg-base-300 px-4 fixed top-0 left-0 w-full z-50">
+      {/* menú hamburguesa para sidebar */}
       {toggleSidebar && (
         <button
           onClick={toggleSidebar}
           className="text-2xl mr-2 cursor-pointer"
         >
-          {isSidebarOpen ? <FaTimes /> : <FaBars />}
+          {isSidebarOpen ? <FaBars /> : <FaTimes />}
         </button>
       )}
 
       {/* Acciones de usuario */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 ml-auto">
         {user ? (
           <>
-            <span className="self-center hidden sm:inline">Hola, {user.name}</span>
+            <span className="self-center hidden font-bold sm:inline">
+              Hola,{" "}
+              {user.name.charAt(0).toUpperCase() +
+                user.name.slice(1).toLowerCase()}
+            </span>
             <button className="btn btn-ghost btn-primary" onClick={logout}>
-              Salir <IoIosLogOut className="text-2xl"/>
+              Salir <IoIosLogOut className="text-2xl" />
             </button>
           </>
         ) : (
           <>
-            <NavLink to="/login" className="btn btn-outline">Inicio</NavLink>
-            <NavLink to="/register" className="btn btn-primary">Registro</NavLink>
+            <NavLink to="/login" className="btn btn-primary">
+              Inicio
+            </NavLink>
+            <NavLink to="/register" className="btn btn-primary">
+              Registro
+            </NavLink>
           </>
         )}
       </div>

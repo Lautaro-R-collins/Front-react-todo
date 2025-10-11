@@ -218,6 +218,7 @@ const HomePage = () => {
           selectedBoard={selectedBoard}
           openRenameBoardModal={openRenameBoardModal}
           openDeleteModal={() => setIsDeleteModalOpen(true)}
+          openCreateModal={openCreateModal}
         />
 
         {/* Grid de notas */}

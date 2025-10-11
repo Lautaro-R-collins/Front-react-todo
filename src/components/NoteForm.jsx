@@ -45,12 +45,12 @@ export const NoteForm = ({ onSubmit, initialDate, closeModal }) => {
         name="title"
         value={note.title}
         onChange={noteChange}
-        className="block w-full mb-8 input lg:input-lg"
+        className="p-2 bg-base-100 w-full mb-4 outline-none focus:ring-0 rounded-md"
         required
       />
 
       <textarea
-        className="textarea textarea-bordered w-full mb-8"
+        className="p-2 bg-base-100 w-full mb-4 outline-none focus:ring-0 rounded-md"
         name="content"
         id="content"
         placeholder="Descripción de la tarea"

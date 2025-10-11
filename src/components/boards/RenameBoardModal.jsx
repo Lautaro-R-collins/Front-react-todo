@@ -13,19 +13,19 @@ const RenameBoardModal = ({
         <h2 className="text-lg font-bold mb-4">Renombrar tablero</h2>
         <input
           type="text"
-          className="border p-2 w-full mb-4"
+          className="p-2 bg-base-100 w-full mb-4 outline-none focus:ring-0 rounded-md"
           value={renameBoardTitle}
           onChange={(e) => setRenameBoardTitle(e.target.value)}
         />
-        <div className="flex justify-end gap-2">
+        <div className="flex gap-2">
           <button
-            className="px-4 py-2 bg-gray-300 rounded"
+            className="px-4 py-2 bg-red-500 rounded cursor-pointer hover:bg-red-600"
             onClick={onClose}
           >
             Cancelar
           </button>
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className="px-4 py-2 bg-primary text-white rounded cursor-pointer hover:bg-primary/80"
             onClick={onRename}
           >
             Guardar

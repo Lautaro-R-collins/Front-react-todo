@@ -10,12 +10,12 @@ const DeleteBoardModal = ({ isOpen, onClose, onConfirm, boardName }) => {
           <span className="font-semibold">{boardName}</span>? Esta acción no se
           puede deshacer.
         </p>
-        <div className="flex justify-end gap-2">
-          <button className="px-4 py-2 bg-gray-300 rounded" onClick={onClose}>
+        <div className="flex gap-2">
+          <button className="px-4 py-2 bg-red-500 rounded cursor-pointer hover:bg-red-600" onClick={onClose}>
             Cancelar
           </button>
           <button
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+            className="px-4 py-2 bg-primary text-white rounded cursor-pointer hover:bg-primary/80"
             onClick={onConfirm}
           >
             Eliminar

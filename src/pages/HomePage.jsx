@@ -187,6 +187,23 @@ const HomePage = () => {
     }
   };
 
+  //      ---- Fijar notas ----
+
+  const handleTogglePin = async (id) => {
+    try {
+      const res = await api.put(`/api/notes/${id}/pin`);
+      setNotes((prevNotes) =>
+        prevNotes.map((note) => (note._id === id ? res.data : note))
+      );
+      toast.success(res.data.pinned ? "Nota fijada" : "Nota desfijada", {
+        position: "bottom-center",
+      });
+    } catch (err) {
+      console.error("Error al alternar pin:", err);
+      toast.error("No se pudo cambiar el estado del pin");
+    }
+  };
+
   if (loading) return <span>Cargando...</span>;
 
   return (
@@ -200,6 +217,15 @@ const HomePage = () => {
         selectedBoard={selectedBoard}
         setSelectedBoard={setSelectedBoard}
         openCreateBoardModal={openCreateBoardModal}
+        openRenameBoardModal={(board) => {
+          setSelectedBoard(board);
+          setRenameBoardTitle(board.name);
+          setIsRenameModalOpen(true);
+        }}
+        openDeleteModal={(board) => {
+          setSelectedBoard(board);
+          setIsDeleteModalOpen(true);
+        }}
       />
 
       <main
@@ -226,6 +252,7 @@ const HomePage = () => {
           notes={notes}
           onDelete={handleDelete}
           onEdit={openEditModal}
+          onTogglePin={handleTogglePin}
         />
       </main>
 

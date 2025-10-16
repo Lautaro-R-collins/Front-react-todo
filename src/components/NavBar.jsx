@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useAuth } from "../context/AuthContext.jsx";
 import { IoIosLogOut } from "react-icons/io";
+import { useAuth } from "../context/AuthContext.jsx";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 export const NavBar = ({ isSidebarOpen, toggleSidebar }) => {
   const { user, logout } = useAuth();
@@ -18,11 +19,16 @@ export const NavBar = ({ isSidebarOpen, toggleSidebar }) => {
         </button>
       )}
 
+      {/* Selector de tema */}
+      <div className="ml-2">
+        <ThemeSwitcher />
+      </div>
+
       {/* Acciones de usuario */}
-      <div className="flex gap-2 ml-auto">
+      <div className="flex gap-2 ml-auto items-center">
         {user ? (
           <>
-            <span className="self-center hidden font-bold sm:inline">
+            <span className="hidden sm:inline font-bold">
               Hola,{" "}
               {user.name.charAt(0).toUpperCase() +
                 user.name.slice(1).toLowerCase()}

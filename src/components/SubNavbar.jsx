@@ -25,10 +25,12 @@ const SubNavbar = ({
           className="btn p-5 btn-sm bg-primary text-white border-none hover:bg-primary/80 flex items-center gap-2"
         >
           <FaPlus size={15} />
-          <span className="hidden sm:inline">Nueva nota</span>
+          <span className="hidden sm:inline textarea-md font-semibold">
+            Nueva nota
+          </span>
         </button>
 
-        {/* ⋮ Menú de tablero */}
+        {/* Menú de tablero */}
         {selectedBoard && (
           <div className="dropdown dropdown-end">
             <div

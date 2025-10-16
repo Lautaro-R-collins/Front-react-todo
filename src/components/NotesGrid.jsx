@@ -1,7 +1,8 @@
 import CartNote from "./CartNote";
 import formatData from "../utils/FormatDate";
 
-const NotesGrid = ({ notes, onDelete, onEdit }) => {
+
+const NotesGrid = ({ notes, onDelete, onEdit, onTogglePin }) => {
   if (notes.length === 0) {
     return (
       <div className="flex text-3xl font-bold flex-col items-center justify-center h-64 text-center text-gray-600">
@@ -10,9 +11,12 @@ const NotesGrid = ({ notes, onDelete, onEdit }) => {
     );
   }
 
+  // Ordenar notas
+  const sortedNotes = [...notes].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 items-start">
-      {notes.map((note) => (
+      {sortedNotes.map((note) => (
         <CartNote
           key={note._id}
           title={note.title}
@@ -22,10 +26,13 @@ const NotesGrid = ({ notes, onDelete, onEdit }) => {
           onDelete={onDelete}
           onEdit={() => onEdit(note)}
           checklist={note.checklist}
+          pinned={note.pinned}
+          onTogglePin={onTogglePin}
         />
       ))}
     </div>
   );
 };
+
 
 export default NotesGrid;

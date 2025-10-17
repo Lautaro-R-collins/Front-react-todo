@@ -24,7 +24,7 @@ const ThemeSwitcher = () => {
 
   return (
     <select
-      className="select select-sm bg-base-200 text-sm focus:outline-none focus:ring-0 border-none shadow-none cursor-pointer"
+      className="select font-bold select-sm bg-base-200 text-sm focus:outline-none focus:ring-0 border-none shadow-none cursor-pointer"
       value={theme}
       onChange={(e) => setTheme(e.target.value)}
     >

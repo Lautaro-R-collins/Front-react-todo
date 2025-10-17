@@ -2,22 +2,25 @@ import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 export const NoteForm = ({ onSubmit, initialDate, closeModal }) => {
-  const [note, setNotes] = useState(initialDate || { title: "", content: "" });
+  const [note, setNote] = useState({ title: "", content: "", priority: "ninguna" });
 
   useEffect(() => {
-    setNotes(initialDate || { title: "", content: "" });
+    if (initialDate) {
+      setNote({
+        title: initialDate.title || "",
+        content: initialDate.content || "",
+        priority: initialDate.priority || "ninguna",
+      });
+    }
   }, [initialDate]);
 
   const noteChange = (e) => {
-    setNotes({
-      ...note,
-      [e.target.name]: e.target.value,
-    });
+    setNote({ ...note, [e.target.name]: e.target.value });
   };
 
   const noteSubmit = (e) => {
     e.preventDefault();
-    onSubmit(note);
+    onSubmit(note); 
   };
 
   return (
@@ -41,7 +44,6 @@ export const NoteForm = ({ onSubmit, initialDate, closeModal }) => {
       <input
         type="text"
         placeholder="Título"
-        id="title"
         name="title"
         value={note.title}
         onChange={noteChange}
@@ -50,14 +52,31 @@ export const NoteForm = ({ onSubmit, initialDate, closeModal }) => {
       />
 
       <textarea
-        className="p-2 bg-base-100 w-full mb-4 outline-none focus:ring-0 rounded-md"
-        name="content"
-        id="content"
         placeholder="Descripción de la tarea"
+        name="content"
         value={note.content}
         onChange={noteChange}
+        className="p-2 bg-base-100 w-full mb-4 outline-none focus:ring-0 rounded-md"
         required
-      ></textarea>
+      />
+
+      {/* Selector de prioridad */}
+      <label className="block mb-2 font-semibold">Prioridad:</label>
+      <div className="flex gap-4 mb-4">
+        {["ninguna", "baja", "media", "alta"].map((level) => (
+          <label key={level} className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="priority"
+              value={level}
+              checked={note.priority === level}
+              onChange={noteChange}
+              className="radio radio-primary"
+            />
+            <span className="capitalize">{level}</span>
+          </label>
+        ))}
+      </div>
 
       <button className="btn btn-soft btn-primary w-full">Guardar</button>
     </form>

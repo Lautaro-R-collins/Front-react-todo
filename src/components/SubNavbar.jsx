@@ -10,7 +10,7 @@ const SubNavbar = ({
   return (
     <div
       className="-mx-4 flex justify-between items-center mb-4 py-4 px-8 
-                 bg-base-200/60 backdrop-blur-md border-b border-amber-50"
+                 bg-base-200/60 backdrop-blur-md border-b border-amber-50 relative z-50"
     >
       {/* Título */}
       <h1 className="text-2xl font-bold">
@@ -18,7 +18,7 @@ const SubNavbar = ({
       </h1>
 
       {/* Menú de opciones + crear nota */}
-      <div className="flex items-center gap-2 z-50">
+      <div className="flex items-center gap-2">
         {/* Botón para crear nota */}
         <button
           onClick={openCreateModal}
@@ -32,18 +32,20 @@ const SubNavbar = ({
 
         {/* Menú de tablero */}
         {selectedBoard && (
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end relative">
+            {/* Botón del dropdown */}
             <div
               tabIndex={0}
               role="button"
-              className="btn bg-base-300/80 backdrop-blur-md border-none shadow-sm"
+              className="btn bg-base-300/80 border-none shadow-sm"
             >
               <FiMoreHorizontal size={22} />
             </div>
 
+            {/* Contenido del dropdown */}
             <ul
               tabIndex={0}
-              className="dropdown-content menu p-2 shadow-lg bg-base-300 rounded-box w-52 z-50"
+              className="dropdown-content menu p-2 shadow-lg bg-base-300 rounded-box w-52 z-[999]"
             >
               {/* Renombrar tablero */}
               <li>

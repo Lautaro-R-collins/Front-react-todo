@@ -8,7 +8,7 @@ export const NavBar = ({ isSidebarOpen, toggleSidebar }) => {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="flex items-center navbar bg-base-300 px-4 fixed top-0 left-0 w-full z-50">
+    <nav className="flex items-center navbar bg-base-300/95 backdrop-blur-sm px-4 fixed top-0 left-0 w-full z-[1000]">
       {/* menú hamburguesa para sidebar */}
       {toggleSidebar && (
         <button

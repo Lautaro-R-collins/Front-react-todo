@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import SubNavbar from "../components/SubNavbar";
@@ -8,63 +8,51 @@ import NoteModal from "../components/NoteModal";
 import BoardModal from "../components/boards/BoardModal";
 import RenameBoardModal from "../components/boards/RenameBoardModal";
 import DeleteBoardModal from "../components/boards/DeleteBoardModal";
-import api from "../api/axiosConfig.js";
 import { toast } from "react-toastify";
 
+import { useNotes } from "../hooks/useNotes";
+import { useBoards } from "../hooks/useBoards";
+
 const HomePage = () => {
-  const [notes, setNotes] = useState([]);
-  const [boards, setBoards] = useState([]);
-  const [selectedBoard, setSelectedBoard] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // Estado local para UI
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
   const location = useLocation();
 
-  // Modal notas
+  // Modales
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingNote, setEditingNote] = useState(null);
-
-  // Modal tableros
   const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
   const [newBoardTitle, setNewBoardTitle] = useState("");
-
-  // Modales adicionales
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
   const [renameBoardTitle, setRenameBoardTitle] = useState("");
 
+  // Custom Hooks
+  const { 
+    notes, 
+    loading: notesLoading, 
+    fetchNotes, 
+    createNote, 
+    updateNote, 
+    deleteNote, 
+    togglePinNote 
+  } = useNotes();
+  
+  const {
+    boards,
+    selectedBoard,
+    setSelectedBoard,
+    createBoard,
+    deleteBoard,
+    renameBoard
+  } = useBoards();
+
+
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
-  // ------------------- Fetch notes -------------------
-  const fetchNotes = useCallback(
-    async (boardId = selectedBoard?._id) => {
-      setLoading(true);
-      try {
-        const response = await api.get("/api/notes", { params: { boardId } });
-        setNotes(response.data);
-      } catch (err) {
-        console.error("Error fetching notes:", err);
-      }
-      setLoading(false);
-    },
-    [selectedBoard]
-  );
-
-  // ------------------- Fetch boards -------------------
-  const fetchBoards = async () => {
-    try {
-      const response = await api.get("/api/boards");
-      setBoards(response.data);
-    } catch (err) {
-      console.error("Error fetching boards:", err);
-    }
-  };
-
+  // Efectos
   useEffect(() => {
-    fetchBoards();
-  }, []);
-
-  useEffect(() => {
-    fetchNotes();
+    fetchNotes(selectedBoard?._id);
   }, [selectedBoard, location, fetchNotes]);
 
   useEffect(() => {
@@ -73,28 +61,8 @@ const HomePage = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // ------------------- Note CRUD -------------------
-  const handleDelete = async (id) => {
-    try {
-      await api.delete(`/api/notes/${id}`);
-      setNotes(notes.filter((note) => note._id !== id));
-      toast.success("Nota eliminada", { position: "bottom-center" });
-    } catch {
-      toast.error("Error al eliminar la nota");
-    }
-  };
 
-  const handleEdit = async (id, updatedNote) => {
-    try {
-      const response = await api.put(`/api/notes/${id}`, updatedNote);
-      setNotes(notes.map((note) => (note._id === id ? response.data : note)));
-      toast.success("Nota actualizada", { position: "bottom-center" });
-    } catch {
-      toast.error("Error al actualizar la nota");
-    }
-  };
-
-  // ------------------- Modals -------------------
+  // Manejadores de Modal de Notas
   const openCreateModal = () => {
     setEditingNote(null);
     setIsModalOpen(true);
@@ -108,57 +76,53 @@ const HomePage = () => {
     setIsModalOpen(false);
   };
 
-  const openCreateBoardModal = () => setIsBoardModalOpen(true);
-  const closeBoardModal = () => setIsBoardModalOpen(false);
-
   const handleSubmitModal = async (noteData) => {
     const boardId = selectedBoard?._id || null;
     noteData.board = boardId;
 
+    let success = false;
     if (editingNote) {
-      await handleEdit(editingNote._id, noteData);
+      success = await updateNote(editingNote._id, noteData);
     } else {
-      try {
-        await api.post("/api/notes", noteData);
-        toast.success(`Nota creada: ${noteData.title}`);
-        fetchNotes(boardId);
-      } catch {
-        toast.error("Error al crear la nota");
-      }
+      success = await createNote(noteData);
     }
-    closeModal();
+
+    if (success) {
+        // Recargar notas es manejado optimísticamente en los hooks, 
+        // pero si createNote no agrega al estado (en mi implementación del hook arriba no lo hacía para board, pero para notas debería quizas)
+        // En useNotes fetchNotes actualiza el estado, y createNote solo hace POST.
+        // Vamos a revisar useNotes.
+        // Si el hook useNotes no actualiza el estado local al crear, necesitamos hacer fetch.
+        // Revisando mi implementación anterior de useNotes: createNote SÍ devuelve true/false pero NO actualizaba el estado local 'notes'.
+        // Así que debemos hacer fetchNotes aquí si es create. 
+        // O mejor mejorar useNotes después. Por ahora mantengamos fetchNotes para asegurar consistencia.
+        if (!editingNote) fetchNotes(boardId); 
+        closeModal();
+    }
   };
+
+  // Manejadores de Tableros
+  const openCreateBoardModal = () => setIsBoardModalOpen(true);
+  const closeBoardModal = () => setIsBoardModalOpen(false);
 
   const handleCreateBoard = async () => {
-    if (!newBoardTitle.trim())
-      return toast.error("El nombre no puede estar vacío");
-    try {
-      const response = await api.post("/api/boards", { name: newBoardTitle });
-      setBoards([...boards, response.data]);
+    if (!newBoardTitle.trim()) return toast.error("El nombre no puede estar vacío");
+    const success = await createBoard(newBoardTitle);
+    if (success) {
       setNewBoardTitle("");
       setIsBoardModalOpen(false);
-      toast.success("Tablero creado");
-    } catch {
-      toast.error("Error al crear tablero");
     }
   };
 
-  // ------------------- Eliminar tablero -------------------
   const handleDeleteBoard = async () => {
     if (!selectedBoard) return;
-    try {
-      await api.delete(`/api/boards/${selectedBoard._id}`);
-      toast.success("Tablero eliminado");
-      setBoards(boards.filter((b) => b._id !== selectedBoard._id));
-      setSelectedBoard(null);
-      fetchNotes(null);
-      setIsDeleteModalOpen(false);
-    } catch {
-      toast.error("Error al eliminar tablero");
+    const success = await deleteBoard(selectedBoard._id);
+    if (success) {
+        setIsDeleteModalOpen(false);
+        fetchNotes(null); // Recargar notas "generales" o vacias
     }
   };
 
-  // ------------------- Renombrar tablero -------------------
   const openRenameBoardModal = () => {
     if (!selectedBoard) return;
     setRenameBoardTitle(selectedBoard.name);
@@ -170,41 +134,13 @@ const HomePage = () => {
       toast.error("El nombre no puede estar vacío");
       return;
     }
-
-    try {
-      const res = await api.put(`/api/boards/${selectedBoard._id}`, {
-        name: renameBoardTitle,
-      });
-      setBoards(
-        boards.map((b) => (b._id === selectedBoard._id ? res.data : b))
-      );
-      setSelectedBoard(res.data);
-      toast.success("Tablero renombrado");
+    const success = await renameBoard(selectedBoard._id, renameBoardTitle);
+    if (success) {
       setIsRenameModalOpen(false);
-    } catch (err) {
-      toast.error("Error al renombrar el tablero");
-      console.error(err);
     }
   };
 
-  //      ---- Fijar notas ----
-
-  const handleTogglePin = async (id) => {
-    try {
-      const res = await api.put(`/api/notes/${id}/pin`);
-      setNotes((prevNotes) =>
-        prevNotes.map((note) => (note._id === id ? res.data : note))
-      );
-      toast.success(res.data.pinned ? "Nota fijada" : "Nota desfijada", {
-        position: "bottom-center",
-      });
-    } catch (err) {
-      console.error("Error al alternar pin:", err);
-      toast.error("No se pudo cambiar el estado del pin");
-    }
-  };
-
-  if (loading) return <span>Cargando...</span>;
+  if (notesLoading && notes.length === 0 && boards.length === 0) return <span>Cargando...</span>;
 
   return (
     <div className="h-screen">
@@ -250,9 +186,9 @@ const HomePage = () => {
         {/* Grid de notas */}
         <NotesGrid
           notes={notes}
-          onDelete={handleDelete}
+          onDelete={deleteNote}
           onEdit={openEditModal}
-          onTogglePin={handleTogglePin}
+          onTogglePin={togglePinNote}
         />
       </main>
 

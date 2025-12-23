@@ -1,16 +1,58 @@
-# React + Vite
+# ToDo FullStack App 📝
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web para la gestión de tareas, notas y organización personal. Desarrollada con React y siguiendo las mejores prácticas de diseño y arquitectura.
 
-Currently, two official plugins are available:
+## 🚀 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Gestión de Notas y Tareas**: Crea, edita, elimina y organiza tus notas con prioridades y checklists.
+- **Tableros Personalizados**: Organiza tus notas en diferentes tableros temáticos.
+- **Calendario Integrado**: Visualiza tus tareas y notas organizadas por fecha con una interfaz intuitiva.
+- **Modo Oscuro/Claro**: Soporte completo para múltiples temas visuales gracias a DaisyUI.
+- **Diseño Responsive**: Interfaz adaptada para funcionar perfectamente en escritorio y dispositivos móviles.
+- **Autenticación Segura**: Sistema de login y registro.
 
-## React Compiler
+## 🛠️ Tecnologías Utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React (Vite)
+- **Estilos**: TailwindCSS + DaisyUI
+- **Navegación**: React Router DOM
+- **Manejo de Estado**: Context API + Custom Hooks
+- **Cliente HTTP**: Axios
+- **Notificaciones**: React Toastify
+- **Calendario**: React Calendar
 
-## Expanding the ESLint configuration
+## 📂 Estructura del Proyecto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+├── api/            # Configuración de Axios e interceptores
+├── components/     # Componentes reutilizables (UI, Modales, Cards)
+├── context/        # Contextos globales (AuthContext)
+├── hooks/          # Custom Hooks (useNotes, useBoards, useAuth)
+├── pages/          # Vistas principales (HomePage, CalendarPage, Login, etc.)
+└── utils/          # Utilidades y funciones auxiliares
+```
+
+## 📦 Instalación y Uso
+
+1. Clonar el repositorio:
+```bash
+git clone <url-del-repositorio>
+```
+
+2. Instalar dependencias:
+```bash
+npm install
+```
+
+3. Iniciar el servidor de desarrollo:
+```bash
+npm run dev
+```
+
+## 📸 vista
+
+![Descripción de la imagen](https://lautaro-rodriguez-collins.vercel.app/_astro/note-app.CZaktkcL.png)
+
+---
+Desarrollado por [Lautaro-R-collins]

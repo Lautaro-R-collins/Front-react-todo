@@ -1,7 +1,7 @@
 /* Sobrescribir estilos de React Calendar para DaisyUI manteniendo layout original */
 
 .react-calendar {
-    @apply bg-base-200 text-base-content rounded-xl border-none shadow-none font-sans w-full !important;
+    @apply !bg-base-200 !text-base-content !rounded-xl !border-none !shadow-none !font-sans !w-full;
 }
 
 /* Navegación */
@@ -16,7 +16,7 @@
 
 /* Días de la semana */
 .react-calendar__month-view__weekdays {
-    @apply text-base-content/60 font-bold text-xs uppercase no-underline !important;
+    @apply !text-base-content/60 !font-bold !text-xs !uppercase !no-underline;
 }
 
 .react-calendar__month-view__weekdays__weekday {
@@ -25,33 +25,33 @@
 
 /* Días/Tiles individuales */
 .react-calendar__tile {
-    @apply text-base-content rounded-lg relative transition-colors cursor-pointer !important;
+    @apply !text-base-content !rounded-lg !relative !transition-colors !cursor-pointer;
     background: none;
 }
 
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-    @apply bg-base-300 !important;
+    @apply !bg-base-300;
 }
 
 /* Día Actual */
 .react-calendar__tile--now {
-    @apply bg-secondary/20 text-secondary font-bold !important;
+    @apply !bg-secondary/20 !text-secondary !font-bold;
 }
 
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-    @apply bg-secondary/30 !important;
+    @apply !bg-secondary/30;
 }
 
 /* Día Seleccionado */
 .react-calendar__tile--active {
-    @apply bg-primary text-primary-content font-bold !important;
+    @apply !bg-primary !text-primary-content !font-bold;
 }
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-    @apply bg-primary text-primary-content !important;
+    @apply !bg-primary !text-primary-content;
 }
 
 /* Fin de semana (opcional, para quitar el rojo por defecto si molesta o adaptarlo) */
@@ -61,5 +61,5 @@
 
 /* Días de otro mes */
 .react-calendar__month-view__days__day--neighboringMonth {
-    @apply text-base-content/30 !important;
+    @apply !text-base-content/30;
 }

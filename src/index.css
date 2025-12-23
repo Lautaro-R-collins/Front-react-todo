@@ -1,7 +1,10 @@
 @import "tailwindcss";
+
 @plugin "daisyui" {
-   themes: all;
-};
+  themes: all;
+}
+
+;
 
 
 /* Scrollbar personalizado */
@@ -21,3 +24,5 @@
 .custom-scroll:hover::-webkit-scrollbar-thumb {
   background-color: rgba(100, 100, 100, 0.6);
 }
+
+@import "./calendar-styles.css";

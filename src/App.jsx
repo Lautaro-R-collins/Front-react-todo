@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
+import CalendarPage from "./pages/CalendarPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
@@ -25,6 +26,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
+        <Route
+          path="/calendar"
+          element={
+            <ProtectedRoute>
+              <CalendarPage />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/login"
@@ -35,6 +45,7 @@ function App() {
           path="/register"
           element={user ? <Navigate to="/home" /> : <RegisterPage />}
         />
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
 
       <ToastContainer position="bottom-right" autoClose={3000} />

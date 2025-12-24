@@ -6,7 +6,7 @@ const MainLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
 
   // Sidebar toggle
-  const toggleSidebar = () => setIsSidebarOpen(prev => !prev);
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   // Ajuste al redimensionar
   useEffect(() => {
@@ -28,8 +28,6 @@ const MainLayout = ({ children }) => {
         boards={boards}
         selectedBoard={selectedBoard}
         setSelectedBoard={setSelectedBoard}
-        // Si tienes funciones para crear, renombrar, eliminar tableros,
-        // las podés pasar también por props
       />
 
       <main

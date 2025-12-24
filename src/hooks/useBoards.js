@@ -48,9 +48,7 @@ export const useBoards = () => {
   const renameBoard = async (id, newName) => {
     try {
       const res = await api.put(`/api/boards/${id}`, { name: newName });
-      setBoards((prev) =>
-        prev.map((b) => (b._id === id ? res.data : b))
-      );
+      setBoards((prev) => prev.map((b) => (b._id === id ? res.data : b)));
       if (selectedBoard?._id === id) {
         setSelectedBoard(res.data);
       }
@@ -63,14 +61,9 @@ export const useBoards = () => {
     }
   };
 
-  // Cargar tableros al montar el hook, opcionalmente. 
-  // En este caso lo dejamos manual o llamado desde un useEffect en el componente si se prefiere,
-  // pero para consistencia con HomePage original, lo llamamos aqui o exponemos fetchBoards
-
   useEffect(() => {
     fetchBoards();
   }, [fetchBoards]);
-
 
   return {
     boards,
@@ -79,6 +72,6 @@ export const useBoards = () => {
     fetchBoards,
     createBoard,
     deleteBoard,
-    renameBoard
+    renameBoard,
   };
 };

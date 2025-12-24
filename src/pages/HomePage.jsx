@@ -28,25 +28,24 @@ const HomePage = () => {
   const [renameBoardTitle, setRenameBoardTitle] = useState("");
 
   // Custom Hooks
-  const { 
-    notes, 
-    loading: notesLoading, 
-    fetchNotes, 
-    createNote, 
-    updateNote, 
-    deleteNote, 
-    togglePinNote 
+  const {
+    notes,
+    loading: notesLoading,
+    fetchNotes,
+    createNote,
+    updateNote,
+    deleteNote,
+    togglePinNote,
   } = useNotes();
-  
+
   const {
     boards,
     selectedBoard,
     setSelectedBoard,
     createBoard,
     deleteBoard,
-    renameBoard
+    renameBoard,
   } = useBoards();
-
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
@@ -60,7 +59,6 @@ const HomePage = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
 
   // Manejadores de Modal de Notas
   const openCreateModal = () => {
@@ -88,16 +86,8 @@ const HomePage = () => {
     }
 
     if (success) {
-        // Recargar notas es manejado optimísticamente en los hooks, 
-        // pero si createNote no agrega al estado (en mi implementación del hook arriba no lo hacía para board, pero para notas debería quizas)
-        // En useNotes fetchNotes actualiza el estado, y createNote solo hace POST.
-        // Vamos a revisar useNotes.
-        // Si el hook useNotes no actualiza el estado local al crear, necesitamos hacer fetch.
-        // Revisando mi implementación anterior de useNotes: createNote SÍ devuelve true/false pero NO actualizaba el estado local 'notes'.
-        // Así que debemos hacer fetchNotes aquí si es create. 
-        // O mejor mejorar useNotes después. Por ahora mantengamos fetchNotes para asegurar consistencia.
-        if (!editingNote) fetchNotes(boardId); 
-        closeModal();
+      if (!editingNote) fetchNotes(boardId);
+      closeModal();
     }
   };
 
@@ -106,7 +96,8 @@ const HomePage = () => {
   const closeBoardModal = () => setIsBoardModalOpen(false);
 
   const handleCreateBoard = async () => {
-    if (!newBoardTitle.trim()) return toast.error("El nombre no puede estar vacío");
+    if (!newBoardTitle.trim())
+      return toast.error("El nombre no puede estar vacío");
     const success = await createBoard(newBoardTitle);
     if (success) {
       setNewBoardTitle("");
@@ -118,8 +109,8 @@ const HomePage = () => {
     if (!selectedBoard) return;
     const success = await deleteBoard(selectedBoard._id);
     if (success) {
-        setIsDeleteModalOpen(false);
-        fetchNotes(null); // Recargar notas "generales" o vacias
+      setIsDeleteModalOpen(false);
+      fetchNotes(null); // Recargar notas "generales" o vacias
     }
   };
 
@@ -140,7 +131,8 @@ const HomePage = () => {
     }
   };
 
-  if (notesLoading && notes.length === 0 && boards.length === 0) return <span>Cargando...</span>;
+  if (notesLoading && notes.length === 0 && boards.length === 0)
+    return <span>Cargando...</span>;
 
   return (
     <div className="h-screen">

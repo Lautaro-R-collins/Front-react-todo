@@ -4,10 +4,6 @@
   themes: all;
 }
 
-
-
-
-
 /* Scrollbar personalizado */
 .custom-scroll::-webkit-scrollbar {
   width: 6px;

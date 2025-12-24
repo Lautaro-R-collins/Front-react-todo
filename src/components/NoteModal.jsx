@@ -8,7 +8,9 @@ const NoteModal = ({ isOpen, closeModal, handleSubmit, editingNote }) => {
       <div className="rounded-2xl w-full max-w-2xl">
         <NoteForm
           onSubmit={handleSubmit}
-          initialDate={editingNote || { title: "", content: "", priority: "ninguna" }}
+          initialDate={
+            editingNote || { title: "", content: "", priority: "ninguna" }
+          }
           closeModal={closeModal}
         />
       </div>

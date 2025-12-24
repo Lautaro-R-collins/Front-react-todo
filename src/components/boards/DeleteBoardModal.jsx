@@ -11,7 +11,10 @@ const DeleteBoardModal = ({ isOpen, onClose, onConfirm, boardName }) => {
           puede deshacer.
         </p>
         <div className="flex gap-2">
-          <button className="px-4 py-2 bg-red-500 rounded cursor-pointer hover:bg-red-600" onClick={onClose}>
+          <button
+            className="px-4 py-2 bg-red-500 rounded cursor-pointer hover:bg-red-600"
+            onClick={onClose}
+          >
             Cancelar
           </button>
           <button

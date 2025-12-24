@@ -1,4 +1,10 @@
-const BoardModal = ({ isOpen, onClose, newBoardTitle, setNewBoardTitle, onCreate }) => {
+const BoardModal = ({
+  isOpen,
+  onClose,
+  newBoardTitle,
+  setNewBoardTitle,
+  onCreate,
+}) => {
   if (!isOpen) return null;
 
   return (

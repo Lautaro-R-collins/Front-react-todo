@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // chequea si hay token y usuario guardado
+  // chequea si hay token y usuario
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   const login = (userData, token) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData); //actualiza el state
+    setUser(userData);
   };
 
   const logout = () => {
@@ -35,6 +35,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook para usar el context
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext);

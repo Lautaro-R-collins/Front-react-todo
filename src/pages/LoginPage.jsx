@@ -8,7 +8,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); 
+  const { login } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
 
   const handleChange = (e) =>
@@ -20,7 +20,7 @@ const LoginPage = () => {
       const res = await axios.post(`${apiUrl}/api/auth/login`, form);
       login(res.data.user, res.data.token);
       toast.success("Bienvenido de nuevo!");
-      navigate("/"); 
+      navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "Error en el login");
     }

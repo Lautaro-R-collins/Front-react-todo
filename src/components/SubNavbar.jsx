@@ -19,7 +19,7 @@ const SubNavbar = ({
 
       {/* Menú de opciones + crear nota */}
       <div className="flex items-center gap-2">
-        {/* Botón para crear nota */}
+        {/* crear nota */}
         <button
           onClick={openCreateModal}
           className="btn p-5 btn-sm bg-primary text-white border-none hover:bg-primary/80 flex items-center gap-2"

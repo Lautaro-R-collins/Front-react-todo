@@ -16,7 +16,7 @@ const NotesGrid = ({ notes, onDelete, onEdit, onTogglePin }) => {
       </div>
     );
   }
-  
+
   const sortedNotes = [...notes].sort((a, b) => {
     if (b.pinned !== a.pinned) return b.pinned ? 1 : -1;
     return (priorityValue[b.priority] || 0) - (priorityValue[a.priority] || 0);
@@ -33,7 +33,7 @@ const NotesGrid = ({ notes, onDelete, onEdit, onTogglePin }) => {
           date={formatData(note.createdAt)}
           checklist={note.checklist}
           pinned={note.pinned}
-          priority={note.priority || "ninguna"}  
+          priority={note.priority || "ninguna"}
           onDelete={onDelete}
           onEdit={() => onEdit(note)}
           onTogglePin={onTogglePin}

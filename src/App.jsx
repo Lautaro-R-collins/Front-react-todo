@@ -26,7 +26,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/calendar"
           element={
@@ -40,7 +40,7 @@ function App() {
           path="/login"
           element={user ? <Navigate to="/home" /> : <LoginPage />}
         />
-        
+
         <Route
           path="/register"
           element={user ? <Navigate to="/home" /> : <RegisterPage />}

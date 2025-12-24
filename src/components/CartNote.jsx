@@ -42,7 +42,9 @@ const CartNote = ({
   const addTask = async () => {
     if (!newTask.trim()) return;
     try {
-      const res = await api.post(`/api/notes/${id}/checklist`, { text: newTask });
+      const res = await api.post(`/api/notes/${id}/checklist`, {
+        text: newTask,
+      });
       setTasks(res.data.checklist || []);
       setNewTask("");
     } catch (err) {
@@ -52,7 +54,9 @@ const CartNote = ({
 
   const toggleTask = async (taskId, done) => {
     try {
-      const res = await api.put(`/api/notes/${id}/checklist/${taskId}`, { done });
+      const res = await api.put(`/api/notes/${id}/checklist/${taskId}`, {
+        done,
+      });
       setTasks(res.data.checklist || []);
     } catch (err) {
       console.error("Error al actualizar subnota", err);
@@ -75,7 +79,9 @@ const CartNote = ({
     >
       <div className="card-body flex flex-col justify-between">
         <div className="flex justify-between items-center text-sm">
-          <time dateTime={date} className="text-gray-400 font-bold">{date}</time>
+          <time dateTime={date} className="text-gray-400 font-bold">
+            {date}
+          </time>
 
           <div className="flex gap-2 text-lg">
             <FaPenToSquare
@@ -90,7 +96,11 @@ const CartNote = ({
             />
             <button
               onClick={() => onTogglePin(id)}
-              className={`transition-transform hover:scale-110 cursor-pointer ${pinned ? "text-error rotate-12" : "text-base-content/60 hover:text-error/80"}`}
+              className={`transition-transform hover:scale-110 cursor-pointer ${
+                pinned
+                  ? "text-error rotate-12"
+                  : "text-base-content/60 hover:text-error/80"
+              }`}
               title={pinned ? "Desfijar nota" : "Fijar nota"}
             >
               <FaThumbtack />
@@ -98,37 +108,51 @@ const CartNote = ({
           </div>
         </div>
 
-        <h2 className="card-title font-bold text-lg lg:text-xl line-clamp-1">{title}</h2>
+        <h2 className="card-title font-bold text-lg lg:text-xl line-clamp-1">
+          {title}
+        </h2>
 
         <div>
-          <p className="text-sm lg:text-base text-base-content/80 line-clamp-3">{content}</p>
-
-          {/* {priority !== "ninguna" && (
-            <p className="text-xs font-semibold mt-2 opacity-75">
-              Prioridad: <span className="capitalize">{priority}</span>
-            </p>
-          )} */}
+          <p className="text-sm lg:text-base text-base-content/80 line-clamp-3">
+            {content}
+          </p>
 
           <div className="mt-3 space-y-2">
             {tasks?.length > 0 ? (
-              tasks.map(task => (
-                <div key={task._id ?? task.id} className="flex items-center gap-2 bg-base-100 p-2 rounded-xl font-semibold">
+              tasks.map((task) => (
+                <div
+                  key={task._id ?? task.id}
+                  className="flex items-center gap-2 bg-base-100 p-2 rounded-xl font-semibold"
+                >
                   <input
                     type="checkbox"
                     checked={!!task.done}
-                    onChange={e => toggleTask(task._id ?? task.id, e.target.checked)}
+                    onChange={(e) =>
+                      toggleTask(task._id ?? task.id, e.target.checked)
+                    }
                     className="checkbox checkbox-sm checked:bg-primary"
                   />
-                  <span className={task.done ? "line-through text-red-300" : "text-base-content"}>
+                  <span
+                    className={
+                      task.done
+                        ? "line-through text-red-300"
+                        : "text-base-content"
+                    }
+                  >
                     {task.text}
                   </span>
-                  <button onClick={() => deleteTask(task._id ?? task.id)} className="text-red-400 hover:text-red-500 ml-auto text-xl cursor-pointer">
+                  <button
+                    onClick={() => deleteTask(task._id ?? task.id)}
+                    className="text-red-400 hover:text-red-500 ml-auto text-xl cursor-pointer"
+                  >
                     <RiCloseCircleLine />
                   </button>
                 </div>
               ))
             ) : (
-              <div className="text-sm text-base-content/60 italic">Sin subtareas</div>
+              <div className="text-sm text-base-content/60 italic">
+                Sin subtareas
+              </div>
             )}
           </div>
 
@@ -137,7 +161,7 @@ const CartNote = ({
               type="text"
               placeholder="Nueva Tarea..."
               value={newTask}
-              onChange={e => setNewTask(e.target.value)}
+              onChange={(e) => setNewTask(e.target.value)}
               className="input input-sm border-none w-full outline-none focus:outline-none focus:ring-0 focus:border-none"
             />
             <button onClick={addTask} className="btn btn-sm btn-primary">

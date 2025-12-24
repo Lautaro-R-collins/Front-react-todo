@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 export const NoteForm = ({ onSubmit, initialDate, closeModal }) => {
-  const [note, setNote] = useState({ title: "", content: "", priority: "ninguna" });
+  const [note, setNote] = useState({
+    title: "",
+    content: "",
+    priority: "ninguna",
+  });
 
   useEffect(() => {
     if (initialDate) {
@@ -20,7 +24,7 @@ export const NoteForm = ({ onSubmit, initialDate, closeModal }) => {
 
   const noteSubmit = (e) => {
     e.preventDefault();
-    onSubmit(note); 
+    onSubmit(note);
   };
 
   return (

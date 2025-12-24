@@ -11,8 +11,8 @@ const Sidebar = ({
   openDeleteModal,
 }) => {
   const { user } = useAuth();
-  
-  // Safety check si el usuario es null (aunque ProtectedRoute debería prevenir esto)
+
+  // Safety check si el usuario es null
   if (!user) return null;
 
   const userName =
@@ -39,14 +39,14 @@ const Sidebar = ({
           </div>
 
           {/* Navegación Desktop */}
-          <SidebarContent 
-             isOpen={isOpen}
-             boards={boards}
-             selectedBoard={selectedBoard}
-             setSelectedBoard={setSelectedBoard}
-             openCreateBoardModal={openCreateBoardModal}
-             openRenameBoardModal={openRenameBoardModal}
-             openDeleteModal={openDeleteModal}
+          <SidebarContent
+            isOpen={isOpen}
+            boards={boards}
+            selectedBoard={selectedBoard}
+            setSelectedBoard={setSelectedBoard}
+            openCreateBoardModal={openCreateBoardModal}
+            openRenameBoardModal={openRenameBoardModal}
+            openDeleteModal={openDeleteModal}
           />
         </div>
       </div>
@@ -66,14 +66,14 @@ const Sidebar = ({
           </div>
 
           {/* Navegación Mobile */}
-          <SidebarContent 
-             isOpen={true} 
-             boards={boards}
-             selectedBoard={selectedBoard}
-             setSelectedBoard={setSelectedBoard}
-             openCreateBoardModal={openCreateBoardModal}
-             openRenameBoardModal={openRenameBoardModal}
-             openDeleteModal={openDeleteModal}
+          <SidebarContent
+            isOpen={true}
+            boards={boards}
+            selectedBoard={selectedBoard}
+            setSelectedBoard={setSelectedBoard}
+            openCreateBoardModal={openCreateBoardModal}
+            openRenameBoardModal={openRenameBoardModal}
+            openDeleteModal={openDeleteModal}
           />
         </div>
       </div>
@@ -82,4 +82,3 @@ const Sidebar = ({
 };
 
 export default Sidebar;
-
